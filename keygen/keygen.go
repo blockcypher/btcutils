@@ -28,6 +28,7 @@ func main() {
   if len(os.Args) == 0 {
     fmt.Println("Generates a new address, public key and private key for the provided network key.")
     fmt.Println("Usage: keygen [netkey]")
+    return
   }
   netkey, err := strconv.Atoi(os.Args[1])
   if err != nil { log.Fatal(err) }
