@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-  if len(os.Args) == 0 {
+  if len(os.Args) != 3 {
     fmt.Println("Signs the provided data (hex encoded) with the provided private key (hex encoded) "+
                     "using the Bitcoin ECDSA curve.")
     fmt.Println("Usage: signer [datahex] [privatehex]")
