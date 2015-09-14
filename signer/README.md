@@ -19,8 +19,14 @@ Building
 
 Install Go (http://golang.org/doc/install) and run:
 
+```shell
 git clone https://github.com/blockcypher/btcutils.git
+
+# If you don't have btcec installed, go get it:
+go get github.com/btcsuite/btcd/btcec
+
 cd btcutils/signer
 go build
+```
 
 This will generate the signer binary. 
