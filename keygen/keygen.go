@@ -1,8 +1,6 @@
 package main
 
 import (
-	"crypto/ecdsa"
-	"crypto/rand"
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
@@ -11,7 +9,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/btcsuite/btcd/btcec"
+	"github.com/btcsuite/btcd/btcec/v2"
 	"golang.org/x/crypto/ripemd160"
 )
 
@@ -47,13 +45,11 @@ func main() {
 }
 
 func NewKey() ([]byte, []byte, error) {
-	priv, err := ecdsa.GenerateKey(btcec.S256(), rand.Reader)
+	priv, err := btcec.NewPrivateKey()
 	if err != nil {
 		return nil, nil, err
 	}
-	pubkey := btcec.PublicKey(priv.PublicKey)
-	pubkeyaddr := &pubkey
-	return pubkeyaddr.SerializeCompressed(), priv.D.Bytes(), nil
+	return priv.PubKey().SerializeCompressed(), priv.Serialize(), nil
 }
 
 func EncodeAddress(hash160 []byte, key byte) string {

@@ -2,11 +2,13 @@ package main
 
 import (
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"log"
 	"os"
 
-	"github.com/btcsuite/btcd/btcec"
+	"github.com/btcsuite/btcd/btcec/v2"
+	"github.com/btcsuite/btcd/btcec/v2/ecdsa"
 )
 
 func main() {
@@ -25,18 +27,19 @@ func main() {
 		log.Fatal(err)
 	}
 
-	sig, err := Sign(priv, data)
-	if err != nil {
+	sig := Sign(priv, data)
+	if sig == nil {
+		err = errors.New("error during signing process")
 		log.Fatal(err)
 	}
 	fmt.Println(hex.EncodeToString(sig))
 }
 
-func Sign(private, data []byte) ([]byte, error) {
-	privkey, _ := btcec.PrivKeyFromBytes(btcec.S256(), private)
-	sig, err := privkey.Sign(data)
-	if err != nil {
-		return nil, err
+func Sign(private, data []byte) []byte {
+	privkey, _ := btcec.PrivKeyFromBytes(private)
+	sig := ecdsa.Sign(privkey, data)
+	if sig == nil {
+		return nil
 	}
-	return sig.Serialize(), nil
+	return sig.Serialize()
 }
