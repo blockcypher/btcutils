@@ -1,5 +1,19 @@
 Utility to generate a new Bitcoin (or other similar cryptocurrency) address, public key and privatekey.
 
+
+Building
+--------
+
+Install Go (http://golang.org/doc/install) and run:
+
+```shell
+git clone https://github.com/blockcypher/btcutils.git
+
+cd btcutils/keygen
+go build
+```
+
+
 Usage: keygen [netkey]
 
 Example:
